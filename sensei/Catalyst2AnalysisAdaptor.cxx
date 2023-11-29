@@ -10,6 +10,7 @@
 
 #include <catalyst.h>
 #include <catalyst_conduit.hpp>
+#include <catalyst_conduit_abi_external.h>
 
 #include <svtkDataObject.h>
 #include <svtkCompositeDataSetRange.h>
@@ -19,6 +20,8 @@
 #include <svtkPointData.h>
 #include <svtkRange.h>
 #include <svtkSmartPointer.h>
+
+#include <filesystem>
 
 namespace sensei
 {
@@ -55,6 +58,44 @@ void Catalyst2AnalysisAdaptor::AddPythonScriptPipeline(const std::string& fileNa
     std::cerr << "catalyst initialize failed with code: " << error_code << std::endl;
   }
 }
+
+//-----------------------------------------------------------------------------
+bool Catalyst2AnalysisAdaptor::AddActionsPipeline(const std::string& fileName)
+{
+  conduit_cpp::Node node;
+
+  if (! std::filesystem::exists(fileName))
+  {
+    SENSEI_ERROR("Failed to load Ascent actions file: \"" << fileName
+      << "\" is not a valid file.")
+    return false;
+  }
+  // read the json file in a string variable
+  std::ifstream actionsStream(fileName);
+  std::string actionsString;
+  actionsStream.seekg(0, std::ios::end);
+  actionsString.reserve(actionsStream.tellg());
+  actionsStream.seekg(0, std::ios::beg);
+  actionsString.assign((std::istreambuf_iterator<char>(actionsStream)),
+                       std::istreambuf_iterator<char>());
+  // parse the json
+  conduit_cpp::Node actions;
+  conduit_node* cactions = conduit_cpp::c_node(&actions);
+  std::cout << actionsString << std::endl;
+  catalyst_conduit_node_parse(cactions, actionsString.c_str(), "json");
+  actions.print();
+  // and pass the node to catalyst
+  node["catalyst/actions"] = actions;
+  auto error_code = catalyst_initialize(conduit_cpp::c_node(&node));
+  if (error_code != catalyst_status_ok)
+  {
+    // you are in trouble young man
+    std::cerr << "catalyst initialize failed with code: " << error_code << std::endl;
+    return false;
+  }
+  return true;
+}
+
 
 //-----------------------------------------------------------------------------
 int Catalyst2AnalysisAdaptor::SetDataRequirements(const DataRequirements &reqs)

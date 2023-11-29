@@ -1,0 +1,9 @@
+<sensei>
+  <analysis type="catalyst2" pipeline="actions"
+            filename="oscillator_catalyst_steering2.json" enabled="1">
+    <!-- used to restrict the meshes and arrays requested -->
+    <mesh name="mesh" structure_only="0" ghost_cells="0" ghost_nodes="0">
+      <cell_arrays>data</cell_arrays>
+    </mesh>
+  </analysis>
+</sensei>

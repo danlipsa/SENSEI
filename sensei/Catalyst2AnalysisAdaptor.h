@@ -25,6 +25,9 @@ public:
 
   /// Adds a pipeline initialized from a Catalyst python script
   virtual void AddPythonScriptPipeline(const std::string &fileName);
+  /// Adds a pipeline initialized for an Ascent actions file
+  bool AddActionsPipeline(const std::string &fileName);
+
   /** Adds a set of sensei::DataRequirements, typically this will come from an XML
    * configuratiopn file. Data requirements tell the adaptor what to fetch from
    * the simulation and write to disk. If none are given then all available

@@ -810,6 +810,15 @@ int ConfigurableAnalysis::InternalsType::AddCatalyst2(pugi::xml_node node)
       this->Catalyst2Adaptor->AddPythonScriptPipeline(fileName);
       }
     }
+  else if (strcmp(node.attribute("pipeline").value(), "actions") == 0)
+    {
+    if (node.attribute("filename"))
+      {
+      std::string fileName = node.attribute("filename").value();
+      this->Catalyst2Adaptor->AddActionsPipeline(fileName);
+      }
+    }
+
 
   if (this->Catalyst2Adaptor->SetDataRequirements(req))
     {

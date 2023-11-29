@@ -28,3 +28,9 @@ This run saves pngs in the datasets subdirectory. It does not work with ParaView
 CATALYST_IMPLEMENTATION_PATHS=<paraview_install_path>/lib/catalyst/ CATALYST_IMPLEMENTATION_NAME=paraview mpirun -np 1 <sensei_build_path>/bin/oscillator -p 100 -g 1 -t 0.01 -f oscillator_catalyst2_steering2.xml ../../inputs/sample.osc
 ```
 This run saves pngs in the datasets subdirectory. It does not work with ParaView live or with steering yet.
+
+## Catalyst2 integration with Ascent actions
+```
+CATALYST_IMPLEMENTATION_PATHS=<paraview_install_path>/lib/catalyst/ CATALYST_IMPLEMENTATION_NAME=ascent mpirun -np 1 <sensei_build_path>/bin/oscillator -p 100 -g 1 -t 0.01 -f oscillator_catalyst2_steering2.xml ../../inputs/sample.osc
+```
+This run saves pngs in the datasets subdirectory. It does not work with ParaView live or with steering.
