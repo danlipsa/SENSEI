@@ -5,5 +5,11 @@
     <mesh name="mesh" structure_only="0" ghost_cells="0" ghost_nodes="0">
       <cell_arrays>data</cell_arrays>
     </mesh>
+    <mesh name="particles" structure_only="0" ghost_cells="0" ghost_nodes="0">
+      <point_arrays>velocity</point_arrays>
+    </mesh>
+    <mesh name="oscillators" structure_only="0" ghost_cells="0" ghost_nodes="0">
+      <point_arrays>omega0</point_arrays>
+    </mesh>
   </analysis>
 </sensei>

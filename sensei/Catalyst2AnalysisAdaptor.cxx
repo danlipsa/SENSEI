@@ -81,9 +81,7 @@ bool Catalyst2AnalysisAdaptor::AddActionsPipeline(const std::string& fileName)
   // parse the json
   conduit_cpp::Node actions;
   conduit_node* cactions = conduit_cpp::c_node(&actions);
-  std::cout << actionsString << std::endl;
   catalyst_conduit_node_parse(cactions, actionsString.c_str(), "json");
-  actions.print();
   // and pass the node to catalyst
   node["catalyst/actions"] = actions;
   auto error_code = catalyst_initialize(conduit_cpp::c_node(&node));
